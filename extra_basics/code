@@ -1,0 +1,50 @@
+<?php 
+
+session_start();
+
+
+
+if(!isset($_SESSION['name'])) {
+ $_SESSION['name'] = "GREG";
+ 
+ $_SESSION['order'] = [
+   'name' => '',
+   'age' => ''
+ ];
+} 
+
+if(isset($_POST['name'])) {
+ $_SESSION['order']['name'] = strip_tags($_POST['name']);
+ $_SESSION['order']['age'] = strip_tags($_POST['age']);
+}
+
+//echo json_encode($_SESSION);
+
+
+?>
+
+<script>
+var my_array = [44, 99];
+var my_json = {
+  'order': {
+   'name': 'greg',
+   'age' => 'old'
+  }
+}
+</script>
+
+<?php 
+echo "<h1>Hello: ". htmlentities($_SESSION['order']['name']) ."</h1>";
+
+$name = db_escape($_SESSION['order']['name']);
+$sql = "SELECT * FROM people WHERE name = '$name'";
+
+?>
+
+<form method="POST">
+
+<input type='text' name='name' value="<?= htmlentities($_SESSION['order']['name']) ?>">
+<input type='text' name='age' value="<?= htmlentities($_SESSION['order']['age']) ?>">
+<input type='submit'>
+
+</form>
